@@ -320,7 +320,7 @@ class LinkFilter
     {
         // We use UTF-8 conversion to handle various graphemes (i.e. cyrillic, or greek)
         $tagsOut = $casesensitive ? $tags : mb_convert_case($tags, MB_CASE_LOWER, 'UTF-8');
-        $tagsOut = str_replace(',', ' ', $tagsOut);
+        $tagsOut = preg_replace('/,\s*/', ' ', $tagsOut);
 
         return array_values(array_filter(explode(' ', trim($tagsOut)), 'strlen'));
     }

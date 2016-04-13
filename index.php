@@ -1407,7 +1407,7 @@ function renderPage()
             'description' => $_POST['lf_description'],
             'private' => (isset($_POST['lf_private']) ? 1 : 0),
             'linkdate' => $linkdate,
-            'tags' => str_replace(',', ' ', $tags)
+            'tags' => preg_replace('/,\s*/', ' ', $tags)
         );
         // If title is empty, use the URL as title.
         if ($link['title'] == '') {
@@ -1738,7 +1738,7 @@ function importFile($LINKSDB)
                         if ($raw_add_date>30000000000) $raw_add_date/=1000;	//If larger than year 2920, then was likely stored in milliseconds instead of seconds
                     }
                     elseif ($attr=='PRIVATE') $link['private']=($value=='0'?0:1);
-                    elseif ($attr=='TAGS') $link['tags']=html_entity_decode(str_replace(',',' ',$value),ENT_QUOTES,'UTF-8');
+                    elseif ($attr=='TAGS') $link['tags']=html_entity_decode(preg_replace('/,\s*/',' ',$value),ENT_QUOTES,'UTF-8');
                 }
                 if ($link['url']!='')
                 {
