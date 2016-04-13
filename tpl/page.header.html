@@ -1,35 +1,22 @@
+<nav id="menu" class="navbar">
+  <div class="navbar-left">
 
-<div id="logo" title="Share your links !" onclick="document.location='?';"></div>
-
-<div id="linkcount" class="nomobile">
-    {if="!empty($linkcount)"}{$linkcount} links{/if}
-</div>
-
-<div id="menu">
   <ul>
-      <li><span id="shaarli_title">
-        <a href="{$titleLink}">{$shaarlititle}</a>
-    </span>
-    </li>
-
 {if="!empty($_GET['source']) && $_GET['source']=='bookmarklet'"}
     {ignore} When called as a popup from bookmarklet, do not display menu. {/ignore}
 {else}
-<li><a href="?" class="nomobile">Home</a></li>
+<li><a href="?" class="nomobile" title="home"><i class="fa fa-home"></i></a></li>
     {if="isLoggedIn()"}
-    <li><a href="?do=logout">Logout</a></li>
+    <li><a href="?do=logout" title="sign out"><i class="fa fa-sign-out"></i></a></li>
+    <li><a href="?do=addlink" title="add link"><i class="fa fa-plus"></i></a></li>
     <li><a href="?do=tools">Tools</a></li>
-    <li><a href="?do=addlink">Add link</a></li>
     {elseif="$GLOBALS['config']['OPEN_SHAARLI']"}
+    <li><a href="?do=addlink" title="add link"><i class="fa fa-plus"></i></a></li>
     <li><a href="?do=tools">Tools</a></li>
-    <li><a href="?do=addlink">Add link</a></li>
     {else}
-    <li><a href="?do=login">Login</a></li>
+    <li><a href="?do=login" title="sign in"><i class="fa fa-sign-in"></i></a></li>
     {/if}
-    <li><a href="{$feedurl}?do=rss{$searchcrits}" class="nomobile">RSS Feed</a></li>
-    {if="$GLOBALS['config']['SHOW_ATOM']"}
-    <li><a href="{$feedurl}?do=atom{$searchcrits}" class="nomobile">ATOM Feed</a></li>
-    {/if}
+
     <li><a href="?do=tagcloud">Tag cloud</a></li>
     <li><a href="?do=picwall{$searchcrits}">Picture wall</a></li>
     <li><a href="?do=daily">Daily</a></li>
@@ -38,7 +25,53 @@
     {/loop}
 {/if}
   </ul>
-</div>
+  </div>
+  <div class="navbar-right">
+    <div class="navbar-item">
+        
+        <form method="GET" name="searchform">
+        <p class="control has-addons">
+            <input class="input" type="text" name="searchterm" placeholder="Search text"
+               {if="!empty($search_term)"}
+                    value="{$search_term}"
+               {/if}
+            >
+            <input type="submit" value="Search" class="button is-info">
+        </p>
+        </form>
+    </div>
+    <div class="navbar-item">
+        <form method="GET" class="myfilter" name="tagfilter">
+        <p class="control has-addons">
+            <input class="input" type="text" name="searchtags" id="awesomeComplete" placeholder="Filter by tag"
+                {if="!empty($search_tags)"}
+                    value="{$search_tags}"
+                {/if}
+                autocomplete="off" data-multiple data-minChars="1"
+                data-list="{loop="$tags"}{$key}, {/loop}"
+            >
+            <input type="submit" value="Search" class="button is-info">
+            </p>
+        </form>
+        {loop="$plugins_header.fields_toolbar"}
+            {$value}
+        {/loop}
+    </div>
+    <div class="navbar-item">
+        <div id="linkcount" class="nomobile">
+            {if="!empty($linkcount)"}{$linkcount} links{/if}
+        </div>
+    </div>
+    <div class="navbar-item nomobile">
+        <a href="{$feedurl}?do=rss{$searchcrits}" class="nomobile" title="rss feed"><i class="fa fa-rss"></i></a>
+    </div>
+    {if="$GLOBALS['config']['SHOW_ATOM']"}
+    <div class="navbar-item nomobile">
+        <a href="{$feedurl}?do=atom{$searchcrits}" class="nomobile">ATOM Feed</a>
+    </div>
+    {/if}
+  </div>
+</nav>
 
 {if="!empty($plugin_errors) && isLoggedIn()"}
     <ul class="errors">
@@ -47,6 +80,13 @@
         {/loop}
     </ul>
 {/if}
+
+
+<script src="inc/awesomplete.js#"></script>
+<script src="inc/awesomplete-multiple-tags.js#"></script>
+<script>
+    awesompleteUniqueTag('#awesomeComplete');
+</script>
 
 <div class="clear"></div>
 

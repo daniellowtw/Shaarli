@@ -1,0 +1,15 @@
+#pageheader {
+    background-color: #333333;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#333333), to(#111111));
+    background: -webkit-linear-gradient(#333333, #111111);
+    background: -moz-linear-gradient(#333333, #111111);
+    background: -ms-linear-gradient(#333333, #111111);
+    background: -o-linear-gradient(#333333, #111111);
+    background: linear-gradient(#333333, #111111);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    padding: 0;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+}
