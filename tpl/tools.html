@@ -34,7 +34,7 @@
   window.open(
     '{$pageabsaddr}?post='+encodeURIComponent(url)+
     '&amp;title='+encodeURIComponent(title)+
-    '&amp;description='+encodeURIComponent(document.getSelection())||getdesc()+
+    '&amp;description='+encodeURIComponent(document.getSelection()||getdesc())+
     '&amp;source=bookmarklet','_blank','menubar=no,height=390,width=600,toolbar=no,scrollbars=no,status=no,dialog=1'
   );
 })();">
