@@ -19,18 +19,25 @@
     <br><br>
 		<a class="smallbutton"
 		   onclick="return alertBookmarklet();"
-		   href="javascript:(
-			function(){
-				var%20url%20=%20location.href;
-				var%20title%20=%20document.title%20||%20url;
-				window.open(
-					'{$pageabsaddr}?post='%20+%20encodeURIComponent(url)+
-					'&amp;title='%20+%20encodeURIComponent(title)+
-					'&amp;description='%20+%20encodeURIComponent(document.getSelection())+
-					'&amp;source=bookmarklet','_blank','menubar=no,height=390,width=600,toolbar=no,scrollbars=no,status=no,dialog=1'
-				);
-			}
-		)();">
+		   href="javascript:(function() {
+  var getdesc = function() {
+    var m = document.getElementsByTagName('meta');
+    for (var i = 0; mlen = m.length,i < mlen; i++) {
+      if (m[i].getAttribute('name') && (m[i].getAttribute('name').toLowerCase() == 'description')) {
+        return m[i].getAttribute('content');
+      }
+    }
+    return '';
+  };
+  var url = location.href;
+  var title = document.title || url;
+  window.open(
+    '{$pageabsaddr}?post='+encodeURIComponent(url)+
+    '&amp;title='+encodeURIComponent(title)+
+    '&amp;description='+encodeURIComponent(document.getSelection())||getdesc()+
+    '&amp;source=bookmarklet','_blank','menubar=no,height=390,width=600,toolbar=no,scrollbars=no,status=no,dialog=1'
+  );
+})();">
 			<b>✚Shaare link</b>
 		</a>
 		<a href="#" onclick="return alertBookmarklet();">
